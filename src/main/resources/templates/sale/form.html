@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:href="@{/webjars/jquery/jquery.min.js}"></script>
+<title>Sale Form</title>
+</head>
+<body>
+<div class="container">
+	<h2>Form</h2>
+	<form class="form-horizontal" th:action="@{/sale/save}" th:object="${sale}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<div class="form-group">
+			<label class="control-label">Customer:</label>
+			<select class="form-control" th:field="*{customer}">
+				<option value="">--</option>
+				<option th:each="customer:${customers}" th:value="${customer.id}" th:utext="${customer.name}"/>
+			</select>
+			<span  class="badge badge-warning" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Error Customer</span></br>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Created at: </label><input class="form-control" type="text" th:field="*{createdAt}" />
+			<span  class="badge badge-warning" th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}">Error CreatedAt</span></br>
+		</div>
+		<a th:href="@{/sale/list}" class="btn btn-secondary" >List Sales</a>
+		<button class="btn btn-primary" type="submit">Submit</button>
+	</form>
+</div>
+</body>
+</html>

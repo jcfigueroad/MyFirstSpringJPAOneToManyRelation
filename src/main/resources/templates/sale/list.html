@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:href="@{/webjars/jquery/jquery.min.js}"></script>
+<title th:text="${title}"></title>
+</head>
+<body>
+<div class="container">
+
+<div class="page-header"><h1>Sale administrator</h1></div>
+<p>
+<a href="/sale/create" class="btn btn-primary" >New sale</a>
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>id</th><th>customer name</th><th>created at</th><th>actions</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="sale: ${sales}">
+
+<td th:text="${sale.id}"></td>
+<td th:text="${sale.customer.name}"></td>
+<td th:text="${sale.createdAt}"></td>
+
+<td><a th:href="@{'/sale/update?id=' + ${sale.id}}" class="btn btn-primary" >Update</a> <a th:href="@{'/sale/delete?id=' + ${sale.id}}" class="btn btn-primary" >Delete</a> <a th:href="@{'/sale/detail?id=' + ${sale.id}}" class="btn btn-primary" >Detail</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

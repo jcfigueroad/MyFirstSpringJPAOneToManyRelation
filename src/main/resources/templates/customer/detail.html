@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" >
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:href="@{/webjars/jquery/jquery.min.js}"></script>
+<title th:text="${title}"></title>
+</head>
+<body>
+<div class="container">
+
+<div class="page-header"><h1>Customer detail</h1></div>
+<p>
+<a th:href="@{/customer/list}" class="btn btn-secondary" >List Customers</a>
+</p>
+<div class="row">
+	<div class="col-md-8">
+		<table class="table">
+			<thead>
+			<tr>
+			<th>id</th><th>name</th><th>last Name</th><th>created at</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${customer.id}"></td>
+					<td th:text="${customer.name}"></td>
+					<td th:text="${customer.lastName}"></td>
+					<td th:text="${customer.createdAt}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<div class="thumbnail">
+			<img th:if="${#strings.isEmpty(customer.image)}" class="img-thumbnail rounded float-left" th:src="@{'/images/dontHave.png'}" th:alt="${customer.image}" />
+			<img th:unless="${#strings.isEmpty(customer.image)}" class="img-thumbnail rounded float-left" th:src="@{'/uploads/' + ${customer.image}}" th:alt="${customer.image}" />
+		</div>
+	</div>
+</div>
+
+<div><h2>Buyed list</h2></div>
+	<table class="table">
+		<thead>
+			<tr>
+			<th>id</th><th>createdAt</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="sale: ${customer.sales}">
+			<td th:text="${sale.id}"></td>
+			<td th:text="${sale.createdAt}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

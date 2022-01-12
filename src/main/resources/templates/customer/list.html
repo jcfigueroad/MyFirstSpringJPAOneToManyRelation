@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:href="@{/webjars/jquery/jquery.min.js}"></script>
+<meta charset="UTF-8">
+<title th:text="#{text.customer.list.title}"></title>
+</head>
+<body>
+<header th:fragment="header"> 
+	<nav class="navbar">
+		<ul class="navbar-nav navbar-right">
+		</ul>
+	</nav>
+</header>
+
+<div class="container">
+
+<div class="page-header"><h1 th:text="#{text.customer.list.title}">Customer administrator</h1>
+<p>
+<a th:href="@{/customer/create}" class="btn btn-primary"> <span th:text="#{text.customer.list.new}"></span></a>
+</p>
+
+<table class="table">
+<thead>
+<tr>
+<th>id</th><th>name</th><th>last Name</th><th>created at</th><th sec:autorize="hasRole('ROLE_ADMIN')">actions</th>
+</tr>
+</thead>
+<tbody>
+	<tr th:each="customer: ${customers}">
+		<td th:text="${customer.id}"></td>
+		<td th:text="${customer.name}"></td>
+		<td th:text="${customer.lastName}"></td>
+		<td th:text="${customer.createdAt}"></td>
+		<td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+			<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/customer/update?id=' + ${customer.id}}" class="btn btn-primary" >Update</a> 
+			<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/customer/delete?id=' + ${customer.id}}" class="btn btn-primary" >Delete</a> 
+			<a sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" th:href="@{'/customer/detail?id=' + ${customer.id}}" class="btn btn-primary" >Detail</a>
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
